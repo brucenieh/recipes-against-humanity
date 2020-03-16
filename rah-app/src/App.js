@@ -7,30 +7,37 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      ingredients: [1]
+      ingredients: []
     };
   }
 
   componentDidMount() {
-    fetch("http://10.0.0.150:5000/ingredients")
+    fetch("http://127.0.0.1:5000/ingredients")
       .then(res => res.json())
-      .then((data) => {
-        this.setState({ ingredients: data.ingredients });
+      .then(data => {
+        console.log(data);
+        this.setState({ ingredients: data });
       })
       .catch(console.log);
     console.log(this.state.ingredients);
   }
 
   render() {
+    const { ingredients } = this.state;
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
             <Input focus placeholder="Search..." />
-            <li key={item.name}>
-              {item.name} {item.price}
-            </li>
+            {console.log(ingredients[0])}
+            <ul>
+              {ingredients.map(item => (
+                <li key={item.id}>
+                  {item.id} {item.name}
+                </li>
+              ))}
+            </ul>
           </p>
         </header>
       </div>
